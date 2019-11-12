@@ -18,7 +18,21 @@ MONGO_DATA_BASE = 'factminr'
 scrapy下载图片的保存路径
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 project_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-IMAGES_STORE = os.path.join(project_path, 'images')
+IMAGES_STORE = os.path.join(project_path, 'images')  # 图片存储路径
+# # 生成缩略图，值为它们的大小尺寸
+# IMAGES_THUMBS = {
+#     'small': (50, 50),
+#     'big': (270, 270),
+# }
+# # 过滤小图片
+# IMAGES_MIN_HEIGHT = 110
+# IMAGES_MIN_WIDTH = 110
+# 设置图片失效时间
+# IMAGES_EXPIRES = 30
+
+# 文件存储
+FILES_STORE = os.path.join(project_path, 'files')  # 存储路径
+FILES_EXPIRES = 90  # 失效时间
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 scrapy请求头

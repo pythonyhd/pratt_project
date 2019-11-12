@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import scrapy
 import pymongo
-from scrapy.pipelines.images import ImagesPipeline
+from scrapy.pipelines.images import ImagesPipeline, FilesPipeline
 import logging
+from scrapy.exceptions import DropItem
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +19,9 @@ class FactminrPipeline(object):
 
 
 class WxappImagePipeline(ImagesPipeline):
+    """
+    wxapp下载图片的管道文件
+    """
     def item_completed(self, results, item, info):
         for ok, value in results:
             # print(ok)  # 返回布尔
@@ -32,6 +37,29 @@ class WxappImagePipeline(ImagesPipeline):
             else:
                 logger.debug('获取不到列表页图片')
                 return item
+
+
+class MyFilesPipeline(FilesPipeline):
+    """
+    文件下载，管道文件
+    """
+
+    def get_media_requests(self, item, info):
+        file_url = item.get('file_url', '')
+        if file_url.endswith('pdf'):
+            yield scrapy.Request(file_url)
+        else:
+            logger.info('不是PDF文件')
+
+    def item_completed(self, results, item, info):
+        image_paths = [x['path'] for ok, x in results if ok]
+        if not image_paths:
+            logger.debug('不是PDF文件格式，是纯文本格式')
+            item['cf_file_name'] = ''
+            # raise DropItem("Item contains no files")
+        else:
+            item['cf_file_name'] = image_paths[0]
+        return item
 
 
 class MongodbPipeline(object):
