@@ -30,7 +30,7 @@ class SzseSpider(scrapy.Spider):
             'factminr.middlewares.UserAgentMiddleware': 130,
         },
         'ITEM_PIPELINES': {
-            'factminr.pipelines.MyFilesPipeline': 300,  # 下载列表页图片
+            'factminr.pipelines.MyFilesPipeline': 300,  # 下载文件
             # 'factminr.pipelines.FactminrPipeline': 320,  # 数据清洗
             'factminr.pipelines.MongodbPipeline': 340,  # 保存到mongodb
         },
@@ -140,6 +140,12 @@ class SzseSpider(scrapy.Spider):
                     else:
                         logger.debug('不是PDF文件，可能是doc或者docx')
                         print(file_url)
+                        yield scrapy.Request(
+                            url=file_url,
+                            callback=self.parse_word,
+                            meta={'jlcf_item': jlcf_item},
+                            priority=5,
+                        )
                 else:
                     jlcf_item['xq_url'] = response.url
                     jlcf_item['ws_nr_txt'] = ck
@@ -270,3 +276,11 @@ class SzseSpider(scrapy.Spider):
                         contents = out.get_text().strip()
                         contents_list.append(contents)
             return contents_list
+
+    def parse_word(self, response):
+        """
+        解析word文件
+        :param response:
+        :return:
+        """
+        print(response.body)
