@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 import random
+import time
 from copy import copy
 
 from scrapy import signals
 from fake_useragent import UserAgent
+from scrapy.http import HtmlResponse
 
 
 class FactminrSpiderMiddleware(object):
+    """
+    默认生成的实例
+    """
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
     # passed objects.
@@ -55,6 +60,9 @@ class FactminrSpiderMiddleware(object):
 
 
 class FactminrCrawlerMiddleware(object):
+    """
+    signal简单测试
+    """
     @classmethod
     def from_crawler(cls, crawler):
         s = cls()
@@ -110,3 +118,20 @@ class UserAgentMiddleware(object):
         user_agent = random.choice(self.user_agent_list)
         request.headers.setdefault(b'User-Agent', user_agent)
         # logger.debug("UserAgent:{}".format(user_agent))
+
+
+class JspageMiddleware(object):
+    """
+    集成selenium爬取，同步抓取
+    """
+    def process_request(self, request, spider):
+        if spider.name == 'jobole':
+            spider.browser.get(request.url)
+            time.sleep(3)
+            # 碰到这个方法直接返回给spider不交给下载器
+            return HtmlResponse(
+                url=spider.browser.current_url,
+                body=spider.browser.page_source,
+                encoding="utf-8",
+                request=request,
+            )

@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2019/11/13 15:07
-# @Author  : King life
-# @Email   : 18353626676@163.com
-# @File    : splash_jdphone.py
-# @Software: PyCharm
 """
 利用splash，爬取京东手机信息
 """

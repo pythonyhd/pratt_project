@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2019/11/13 16:19
-# @Author  : King life
-# @Email   : 18353626676@163.com
-# @File    : splash_lua.py
-# @Software: PyCharm
 import scrapy
 from scrapy_splash.request import SplashRequest
 

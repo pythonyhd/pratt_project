@@ -80,3 +80,16 @@ USER_AGENTS = [
     'Mozilla/4.0 (compatible; MSIE 12.0',
     'Mozilla/5.0 (Windows NT 5.1; rv:44.0) Gecko/20100101 Firefox/44.0',
 ]
+
+aaa = {
+"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+"Accept-Encoding": "gzip, deflate",
+"Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+"Cache-Control": "no-cache",
+"Connection": "keep-alive",
+"DNT": "1",
+"Host": "www.sse.com.cn",
+"Pragma": "no-cache",
+"Referer": "http://www.sse.com.cn/disclosure/listedinfo/regular/",
+"Upgrade-Insecure-Requests": "1",
+}

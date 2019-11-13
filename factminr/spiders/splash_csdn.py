@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2019/11/13 17:42
-# @Author  : King life
-# @Email   : 18353626676@163.com
-# @File    : splash_csdn.py
-# @Software: PyCharm
 import scrapy
 from scrapy_splash.request import SplashRequest
 
