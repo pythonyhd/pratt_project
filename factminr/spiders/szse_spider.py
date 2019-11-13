@@ -4,8 +4,8 @@ import random
 import re
 from functools import reduce
 from io import BytesIO
-from urllib.parse import urljoin
 
+from urllib.parse import urljoin
 import jsonpath
 import scrapy
 import logging
@@ -138,14 +138,10 @@ class SzseSpider(scrapy.Spider):
                             priority=5,
                         )
                     else:
-                        logger.debug('不是PDF文件，可能是doc或者docx')
-                        print(file_url)
-                        yield scrapy.Request(
-                            url=file_url,
-                            callback=self.parse_word,
-                            meta={'jlcf_item': jlcf_item},
-                            priority=5,
-                        )
+                        logger.debug('不是PDF文件，可能是doc或者docx，只能先下载到本地才能读取解析')
+                        jlcf_item['file_url'] = file_url
+                        jlcf_item['xq_url'] = file_url
+                        yield jlcf_item
                 else:
                     jlcf_item['xq_url'] = response.url
                     jlcf_item['ws_nr_txt'] = ck
@@ -269,18 +265,12 @@ class SzseSpider(scrapy.Spider):
             for page in doc.get_pages():  # doc.get_pages() 获取page列表
                 # 接受该页面的LTPage对象
                 interpreter.process_page(page)
-                # 这里layout是一个LTPage对象 里面存放着 这个page解析出的各种对象 一般包括LTTextBox, LTFigure, LTImage, LTTextBoxHorizontal 等等 想要获取文本就获得对象的text属性，
+                # 这里layout是一个LTPage对象 里面存放着
+                # 这个page解析出的各种对象 一般包括LTTextBox, LTFigure, LTImage, LTTextBoxHorizontal 等等
+                # 想要获取文本就获得对象的text属性
                 layout = device.get_result()
                 for index, out in enumerate(layout):
                     if isinstance(out, LTTextBox):
                         contents = out.get_text().strip()
                         contents_list.append(contents)
             return contents_list
-
-    def parse_word(self, response):
-        """
-        解析word文件
-        :param response:
-        :return:
-        """
-        print(response.body)

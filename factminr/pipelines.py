@@ -48,8 +48,12 @@ class MyFilesPipeline(FilesPipeline):
         file_url = item.get('file_url', '')
         if file_url.endswith('pdf'):
             yield scrapy.Request(file_url)
+
+        elif file_url.endswith('doc'):
+            yield scrapy.Request(file_url)
+
         else:
-            logger.info('不是PDF文件')
+            logger.info('既不是PDF也不是word纯文本')
 
     def item_completed(self, results, item, info):
         image_paths = [x['path'] for ok, x in results if ok]
