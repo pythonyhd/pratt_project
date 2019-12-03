@@ -32,7 +32,7 @@ class SplashWithlua(scrapy.Spider):
         'DUPEFILTER_CLASS': 'scrapy_splash.SplashAwareDupeFilter',  # 设置Splash自己的去重过滤器
         'HTTPCACHE_STORAGE': 'scrapy_splash.SplashAwareFSCacheStorage',  # 使用Splash的Http缓存
         'DOWNLOAD_TIMEOUT': '20',  # 下载超时时间默认180
-        'RETRY_ENABLED': 'True',
+        'RETRY_ENABLED': True,
         'RETRY_TIMES': '9',  # 重试次数，默认在此基础加1
     }
 

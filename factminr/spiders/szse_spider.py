@@ -34,7 +34,6 @@ class SzseSpider(scrapy.Spider):
             # 'factminr.pipelines.FactminrPipeline': 320,  # 数据清洗
             'factminr.pipelines.MongodbPipeline': 340,  # 保存到mongodb
         },
-        'LOG_LEVEL': 'INFO',
     }
 
     def start_requests(self):
