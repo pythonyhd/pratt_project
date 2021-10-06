@@ -1,4 +1,4 @@
-Scrapy==1.7.3
+Scrapy==1.8.1
 scrapy-redis==0.6.8
 scrapy-redis-bloomfilter==0.7.0
 scrapy-splash==0.7.2
